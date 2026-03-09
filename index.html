@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<iframe id="show"></iframe>
+<script>
+var _s=document.currentScript;_s&&_s.remove();
+(function(){var B='https://katsugachi.github.io/Solus-MS/',f=document.querySelector('iframe');f.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block;';document.documentElement.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';document.body.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';fetch(B,{cache:'no-store'}).then(function(r){return r.text();}).then(function(h){h=h.replace(/<head>/i,'<head><base href="'+B+'">');var d=f.contentDocument;d.open();d.write(h);d.close();f.addEventListener('load',function L(){f.removeEventListener('load',L);Array.from(f.attributes).forEach(function(a){f.removeAttribute(a.name);});document.querySelectorAll('script,style,link,meta').forEach(function(e){e.remove();});while(document.head.firstChild)document.head.removeChild(document.head.firstChild);[document.documentElement,document.head,document.body].forEach(function(e){if(!e)return;Array.from(e.attributes).forEach(function(a){e.removeAttribute(a.name);});});document.documentElement.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';document.body.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';f.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block;';document.title='';});}).catch(function(e){console.error(e);});})();
+</script>
+</body>
+</html>
