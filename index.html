@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html>
-<head></head>
+<head><meta charset="UTF-8"></head>
 <body>
-<iframe id="show"></iframe>
 <script>
-var _s=document.currentScript;_s&&_s.remove();
-(function(){var B='https://katsugachi.github.io/Solus-MS/',f=document.querySelector('iframe');f.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block;';document.documentElement.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';document.body.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';fetch(B,{cache:'no-store'}).then(function(r){return r.text();}).then(function(h){h=h.replace(/<head>/i,'<head><base href="'+B+'">');var d=f.contentDocument;d.open();d.write(h);d.close();f.addEventListener('load',function L(){f.removeEventListener('load',L);Array.from(f.attributes).forEach(function(a){f.removeAttribute(a.name);});document.querySelectorAll('script,style,link,meta').forEach(function(e){e.remove();});while(document.head.firstChild)document.head.removeChild(document.head.firstChild);[document.documentElement,document.head,document.body].forEach(function(e){if(!e)return;Array.from(e.attributes).forEach(function(a){e.removeAttribute(a.name);});});document.documentElement.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';document.body.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';f.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block;';document.title='';});}).catch(function(e){console.error(e);});})();
+(function(){
+  var BASE='https://katsugachi.github.io/Solus-MS/';
+
+  document.documentElement.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';
+  document.body.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';
+
+  // Layer 1: blank iframe in this page
+  var f1=document.createElement('iframe');
+  f1.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block;';
+  document.body.appendChild(f1);
+  var d1=f1.contentDocument;
+  d1.open();d1.write('<!DOCTYPE html><html><head></head><body></body></html>');d1.close();
+  d1.documentElement.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';
+  d1.body.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';
+
+  // Layer 2: blank iframe inside layer 1
+  var f2=d1.createElement('iframe');
+  f2.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block;';
+  d1.body.appendChild(f2);
+
+  // Load site into layer 2 via fetch + document.write
+  fetch(BASE,{cache:'no-store'}).then(function(r){return r.text();}).then(function(html){
+    html=html.replace(/<head>/i,'<head><base href="'+BASE+'">');
+    var d2=f2.contentDocument;
+    d2.open();d2.write(html);d2.close();
+
+    // Nuke this page completely
+    document.querySelectorAll('script,style,link,meta').forEach(function(e){e.remove();});
+    while(document.head.firstChild)document.head.removeChild(document.head.firstChild);
+    [document.documentElement,document.head,document.body].forEach(function(el){
+      if(!el)return;
+      Array.from(el.attributes).forEach(function(a){el.removeAttribute(a.name);});
+    });
+    Array.from(f1.attributes).forEach(function(a){f1.removeAttribute(a.name);});
+    document.documentElement.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';
+    document.body.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';
+    f1.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block;';
+    document.title='';
+
+    // Nuke layer 1 attributes too
+    [d1.documentElement,d1.head,d1.body].forEach(function(el){
+      if(!el)return;
+      Array.from(el.attributes).forEach(function(a){el.removeAttribute(a.name);});
+    });
+    Array.from(f2.attributes).forEach(function(a){f2.removeAttribute(a.name);});
+    d1.documentElement.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';
+    d1.body.style.cssText='margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;';
+    f2.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;display:block;';
+
+  }).catch(function(e){console.error(e);});
+})();
 </script>
 </body>
 </html>
